@@ -20,7 +20,11 @@ public class LoginDao {
 			ResultSet rs = s
 					.executeQuery("select * from userdetails where umail='" + mail + "' and upassword='" + pass + "'");
 			if (rs.next()) {
-				return true;
+				String password = rs.getString("upassword");
+				if (pass.equals(password)) {
+					return true;
+				}
+				return false;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -35,9 +39,7 @@ public class LoginDao {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-
 		}
-
 		return false;
 	}
 }

@@ -12,33 +12,29 @@ import javax.servlet.http.HttpSession;
 
 import com.killer.dao.LoginDao;
 
-
 @WebServlet("/Login")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-   
-    public LoginServlet() {
-        super();
-    }
 
+	public LoginServlet() {
+		super();
+	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		//doGet(request, response);
 		String mail = req.getParameter("useremail");
 		String pass = req.getParameter("userpassword");
-		
+
 		LoginDao ld = new LoginDao();
-		
-		if(ld.loginValidate(mail, pass)) {
+
+		if (ld.loginValidate(mail, pass)) {
 			HttpSession session = req.getSession();
 			session.setAttribute("username", mail);
 			res.sendRedirect("welcome.jsp");
-		}
-		else {
+		} else {
 			res.sendRedirect("login.jsp");
 		}
 	}
