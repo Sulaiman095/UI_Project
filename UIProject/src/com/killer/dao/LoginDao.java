@@ -1,24 +1,21 @@
 package com.killer.dao;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+
 
 public class LoginDao {
 
 	public boolean loginValidate(String mail, String pass) {
 		Connection con = null;
-		Statement s = null;
+		PreparedStatement ps = null;
 		String url = "jdbc:mysql://localhost:3306/j2ee";
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			con = DriverManager.getConnection(url, "root", "Killer0786");
-			s = con.createStatement();
-			s.executeUpdate("use j2ee");
-			ResultSet rs = s
-					.executeQuery("select * from userdetails where umail='" + mail + "' and upassword='" + pass + "'");
+			ps = con.prepareStatement("select * from userdetails where umail=? and upassword=?");
+			ps.setString(1, mail);
+			ps.setString(2, pass);
+			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
 				String password = rs.getString("upassword");
 				if (pass.equals(password)) {
@@ -30,8 +27,8 @@ public class LoginDao {
 			e.printStackTrace();
 		} finally {
 			try {
-				if (s != null) {
-					s.close();
+				if (ps != null) {
+					ps.close();
 				}
 				if (con != null) {
 					con.close();
