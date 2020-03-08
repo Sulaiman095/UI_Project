@@ -24,18 +24,18 @@ public class LoginServlet extends HttpServlet {
 			throws ServletException, IOException {
 	}
 
-	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		String mail = req.getParameter("useremail");
-		String pass = req.getParameter("userpassword");
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String mail = request.getParameter("useremail");
+		String pass = request.getParameter("userpassword");
 
 		LoginDao ld = new LoginDao();
 
 		if (ld.loginValidate(mail, pass)) {
-			HttpSession session = req.getSession();
+			HttpSession session = request.getSession();
 			session.setAttribute("username", mail);
-			res.sendRedirect("welcome.jsp");
+			response.sendRedirect("welcome.jsp");
 		} else {
-			res.sendRedirect("login.jsp");
+			response.sendRedirect("login.jsp");
 		}
 	}
 

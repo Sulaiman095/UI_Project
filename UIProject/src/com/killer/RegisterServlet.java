@@ -27,21 +27,22 @@ public class RegisterServlet extends HttpServlet {
 	}
 
 
-	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//doGet(request, response);
 		//PrintWriter out = res.getWriter();
-		String name = req.getParameter("username");
-		String mail = req.getParameter("useremail");
-		String pass = req.getParameter("userpassword");
-		int age = Integer.parseInt(req.getParameter("userage"));
-		String gender = req.getParameter("usergender");
+		String name = request.getParameter("username");
+		String mail = request.getParameter("useremail");
+		String pass = request.getParameter("userpassword");
+		int age = Integer.parseInt(request.getParameter("userage"));
+		String gender = request.getParameter("usergender");
 		
 		Users ud = new Users(name, mail, pass, age, gender);
 		RegisterDao rd = new RegisterDao();
 		rd.insertDataUsers(ud);
+		
 		// Redirecting to login page
-		RequestDispatcher dis = req.getRequestDispatcher("login.jsp");
-		dis.forward(req, res);
+		RequestDispatcher dis = request.getRequestDispatcher("login.jsp");
+		dis.forward(request, response);
 		
 		
 	}

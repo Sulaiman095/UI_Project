@@ -14,7 +14,8 @@ public class RegisterDao {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			con = DriverManager.getConnection(url, user, password);
-			ps = con.prepareStatement("insert into userdetails (uname, umail, upassword,uage, ugender) values(?,?,?,?,?)");
+			ps = con.prepareStatement(
+					"insert into userdetails (uname, umail, upassword,uage, ugender) values(?,?,?,?,?)");
 			ps.setString(1, u.getName());
 			ps.setString(2, u.getMail());
 			ps.setString(3, u.getPassword());
